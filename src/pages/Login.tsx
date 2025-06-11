@@ -36,7 +36,9 @@ const Login = () => {
         setError(response.error.message);
       }
     } else {
-      // TODO: Handle successful login, e.g., redirect to dashboard or show success message
+      const token = response.data.token;
+      localStorage.setItem('authToken', token);
+      window.location.href = `/todos`;
     }
   };
 

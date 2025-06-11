@@ -58,7 +58,7 @@ router.put('/todos/:id', async (req: AuthenticatedRequest, res: Response) => {
     });
 
     if (!todo) {
-      res.status(404).json({message: "Todo with ID " + todoId + " not found"});
+      res.status(404).json({message: "TodoList with ID " + todoId + " not found"});
       return;
     }
 
@@ -86,10 +86,10 @@ router.delete('/todos/:id', async (req: AuthenticatedRequest, res: Response) => 
     });
 
     if (!todo) {
-      res.status(404).json({message: "Todo with ID " + todoId + " not found"});
+      res.status(404).json({message: "TodoList with ID " + todoId + " not found"});
     }
 
-    res.status(204).json({message: "Todo deleted successfully", todo});
+    res.status(204).json({message: "TodoList deleted successfully", todo});
   } catch (error) {
     res.status(500).json({message: "Error deleting todo ", error});
   }

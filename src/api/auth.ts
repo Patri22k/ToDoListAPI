@@ -12,7 +12,7 @@ export const registerUser = async (name: string, email: string, password: string
 
     return { success: true, data: response.data};
   } catch (error: any) {
-    const errors = error?.response?.data || error || 'An error occurred during registration';
+    const errors = error?.response?.data || error || { message: 'An error occurred during registration' };
 
     return { success: false, error: errors};
   }
@@ -20,7 +20,7 @@ export const registerUser = async (name: string, email: string, password: string
 
 export const loginUser = async (email: string, password: string)  => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/login}`, {
+    const response = await axios.post(`${API_BASE_URL}/login`, {
       email,
       password
     });

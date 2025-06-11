@@ -9,5 +9,5 @@ export const generateToken = (userId: string) => {
 }
 
 export const hashPassword = async (pass: string) => {
-  return bcrypt.hash(pass, env("PASSWORD_SALT"));
+  return bcrypt.hash(pass, 10);
 }

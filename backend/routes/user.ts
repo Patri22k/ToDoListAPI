@@ -8,7 +8,7 @@ import {handleError, PrismaErrorCode} from "../utils/handleError";
 const router = Router();
 const prisma = new PrismaClient();
 
-router.post("/register", async (req: Request, res: Response): Promise<any> => {
+router.post("/register", async (req: Request, res: Response) => {
   try {
     // Validate request body
     const {name, email, password} = registerUserSchema.parse(req.body);
@@ -29,7 +29,7 @@ router.post("/register", async (req: Request, res: Response): Promise<any> => {
     // Handle validation errors from zod or prisma
     handleError(res, error, (prismaErrorCode) => {
       if (prismaErrorCode == PrismaErrorCode.CONFLICT) {
-        return res.status(400).json({message: "User with this email already exists"});
+        return res.status(400).json({message: "TodoList with this email already exists"});
       } else {
         // Handle other errors
         return res.status(500).json({message: "Error creating user in database, " + error});
@@ -38,7 +38,7 @@ router.post("/register", async (req: Request, res: Response): Promise<any> => {
   }
 });
 
-router.post('/login', async (req: Request, res: Response): Promise<any> => {
+router.post('/login', async (req: Request, res: Response) => {
   try {
     const {email, password} = loginUserSchema.parse(req.body);
 
@@ -48,12 +48,11 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
         where: {email}
       });
 
-    const passwordFromReq = await hashPassword(password);
-
     // Check password
-    const isPasswordValid = await bcrypt.compare(passwordFromReq, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).json({message: "Invalid password."});
+      res.status(400).json({message: "Invalid email or password."});
+      return;
     }
 
     // Generate JWT
@@ -64,10 +63,12 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
     // Handle validation errors from zod
     handleError(res, error, (prismaErrorCode) => {
       if (prismaErrorCode == PrismaErrorCode.NOT_FOUND) {
-        res.status(404).json({message: "User not found"});
+        res.status(404).json({message: "TodoList not found"});
+        return;
       } else {
         // Handle other errors
         res.status(500).json({message: "Error logging in user, " + error});
+        return;
       }
     });
   }
