@@ -12,7 +12,7 @@ interface TodoLayoutProps extends React.FC<LayoutProps> {
 
 const TodoLayout: TodoLayoutProps = (props: LayoutProps) => {
   return (
-    <div className="Todo w-full min-h-screen flex gap-y-5 py-6">
+    <div className="Todo w-full min-h-screen flex gap-y-5 py-6 sm:py-3">
       {props.children}
     </div>
   );

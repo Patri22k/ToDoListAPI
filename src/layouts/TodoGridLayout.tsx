@@ -6,7 +6,7 @@ interface TodoLayoutProps {
 
 const TodoGridLayout = (props: TodoLayoutProps) => {
   return (
-    <div className="w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-3 items-center justify-center">
+    <div className="TodoLayout w-full columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
       {props.children}
     </div>
   );

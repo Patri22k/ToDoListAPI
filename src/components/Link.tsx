@@ -4,7 +4,7 @@ interface CustomLinkProps extends RouterLinkProps {
   text: string;
 }
 
-const CustomLink = ({ to, text, className, ...rest}: CustomLinkProps) => {
+const CustomLink = ({ to, text, ...rest}: CustomLinkProps) => {
   return (
     <RouterLink
       to={to}

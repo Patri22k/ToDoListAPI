@@ -4,6 +4,7 @@ import * as React from "react";
 import {fetchTodos} from "../api/todo.ts";
 import {useEffect} from "react";
 import Sidebar from "../components/Sidebar.tsx";
+import SidebarTask from "../components/SidebarTask.tsx";
 
 interface TodoItem {
   id: number;
@@ -16,6 +17,10 @@ const TodoList = () => {
   const [todos, setTodos] = React.useState<TodoItem[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
+
+  const handleNewTask = () => {
+
+  };
 
   const loadTodos = async () => {
     setLoading(true);
@@ -35,10 +40,12 @@ const TodoList = () => {
 
   return (
     <TodoLayout>
-      <Sidebar className="hidden md:block md:w-1/3">
-        <p>Hello</p>
+      <Sidebar className="hidden sm:block sm:w-1/3 lg:w-1/4">
+        <SidebarTask onClick={handleNewTask}>
+          New Task
+        </SidebarTask>
       </Sidebar>
-      <div className="w-2/3">
+      <div className="flex flex-col w-full sm:w-fit gap-y-3">
         <TodoLayout.Header>
           <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Your Todos</h1>
         </TodoLayout.Header>
@@ -50,9 +57,9 @@ const TodoList = () => {
           ) : todos.length > 0 ? (
             <TodoGridLayout>{todos.map((todo) => (
               <div key={todo.id}
-                   className="sm:aspect-square w-full h-full flex flex-col justify-between text-left rounded-lg border">
+                   className="w-full break-inside-avoid text-left rounded-lg border">
                 <h2 className="mx-2 mt-2 text-lg font-bold">{todo.title}</h2>
-                <p className="h-full mx-2">{todo.description}</p>
+                <p className="h-full mx-2 overflow-hidden">{todo.description}</p>
                 <p className="mx-2 mb-2">Status: {todo.status}</p>
               </div>
             ))}
