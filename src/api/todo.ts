@@ -12,15 +12,10 @@ export const fetchTodos = async () => {
       },
     });
     return {success: true, data: response.data};
-  } catch (error: unknown) {
-    let errorMessage = 'An error occurred while fetching todos';
 
-    if (axios.isAxiosError(error)) {
-      errorMessage = error.response?.data || error.message;
-    } else if (error instanceof Error) {
-      errorMessage = error.message;
-    }
+  } catch (error: any) {
 
+    const errorMessage = error.response?.data || error.message || { message: 'An error occurred while fetching todos' };
     return {success: false, error: errorMessage};
   }
 }
@@ -40,15 +35,8 @@ export const createTodo = async (title: string, description: string) => {
       });
 
     return {success: true, data: response.data};
-  } catch (error: unknown) {
-    let errorMessage = 'An error occurred while creating todo';
-
-    if (axios.isAxiosError(error)) {
-      errorMessage = error.response?.data || error.message;
-    } else if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-
+  } catch (error: any) {
+    const errorMessage = error.response?.data || error.message || { message: 'An error occurred while creating todo' };
     return {success: false, error: errorMessage};
   }
 };

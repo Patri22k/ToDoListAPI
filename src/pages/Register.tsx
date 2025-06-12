@@ -3,6 +3,8 @@ import {useState} from "react";
 import * as React from "react";
 import {registerUser} from "../api/auth.ts";
 import CustomLink from "../components/Link.tsx";
+import CustomInput from "../components/CustomInput.tsx";
+import CustomButton from "../components/CustomButton.tsx";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -51,19 +53,30 @@ const Register = () => {
       </AuthLayout.Header>
       <AuthLayout.Main>
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-3 w-full">
-          <input className="py-2 border rounded pl-2" type="text" onChange={(e) => setName(e.target.value)}
-                 value={name} placeholder="John Doe"/>
+          <CustomInput
+            type="text"
+            value={name}
+            placeholder="John Doe"
+            onChange={(e) => setName(e.target.value)}
+          />
           {nameError && <p className="text-red-700">{nameError}</p>}
-          <input className="py-2 border rounded pl-2" type="email"
-                 onChange={(e) => setEmail(e.target.value)} value={email} placeholder="john@doe.com"/>
+          <CustomInput
+            type="email"
+            value={email}
+            placeholder="john@doe.com"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           {emailError && <p className="text-red-700">{emailError}</p>}
-          <input className="py-2 border rounded pl-2" type="password"
-                 onChange={(e) => setPassword(e.target.value)} value={password} placeholder="123456789"/>
+          <CustomInput
+            type="password"
+            value={password}
+            placeholder="123456789"
+            onChange={(e) => setPassword(e.target.value)}
+          />
           {passwordError && <p className="text-red-700">{passwordError}</p>}
-          <button
-            className="text-sm sm:text-base lg:text-xl px-6 py-2 bg-gray-300 rounded-lg hover:text-amber-50 hover:bg-gray-700 hover:transition hover:duration-500"
-            type="submit">Submit
-          </button>
+          <CustomButton type="submit">
+            Submit
+          </CustomButton>
           {error && <p className="text-red-700">{error}</p>}
         </form>
         <CustomLink text="Go Back to Menu" to="/" />

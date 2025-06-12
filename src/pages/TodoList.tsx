@@ -5,6 +5,7 @@ import {fetchTodos} from "../api/todo.ts";
 import {useEffect} from "react";
 import Sidebar from "../components/Sidebar.tsx";
 import SidebarTask from "../components/SidebarTask.tsx";
+import NewTodoModal from "../components/NewTodoModal.tsx";
 
 interface TodoItem {
   id: number;
@@ -17,9 +18,10 @@ const TodoList = () => {
   const [todos, setTodos] = React.useState<TodoItem[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
+  const [showNewTodoModal, setShowNewTodoModal] = React.useState(false);
 
   const handleNewTask = () => {
-
+    setShowNewTodoModal(true);
   };
 
   const loadTodos = async () => {
@@ -71,6 +73,12 @@ const TodoList = () => {
           )}
         </TodoLayout.Main>
       </div>
+      {showNewTodoModal && (
+        <NewTodoModal
+          onClose={() => setShowNewTodoModal(false)}
+          onCreated={loadTodos}
+        />
+      )}
     </TodoLayout>
   );
 };

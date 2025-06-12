@@ -3,6 +3,8 @@ import CustomLink from "../components/Link.tsx";
 import {useState} from "react";
 import * as React from "react";
 import {loginUser} from "../api/auth.ts";
+import CustomButton from "../components/CustomButton.tsx";
+import CustomInput from "../components/CustomInput.tsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -42,8 +44,6 @@ const Login = () => {
     }
   };
 
-  // TODO: Add component button, input
-
   return (
     <AuthLayout>
       <AuthLayout.Header>
@@ -51,12 +51,12 @@ const Login = () => {
         <p>Please enter your credentials to log in to your account</p>
       </AuthLayout.Header>
       <AuthLayout.Main>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-y-3 w-full">
-          <input className="py-2 border rounded pl-2" type="email" placeholder="john@doe.com" onChange={(e) => setEmail(e.target.value)}/>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-y-3 w-full" autoComplete="off">
+          <CustomInput type="email" placeholder="john@doe.com" onChange={(e) => setEmail(e.target.value)}/>
           {emailError && <p className="text-red-600">{emailError}</p>}
-          <input className="py-2 border rounded pl-2" type="password" placeholder="123456789" onChange={(e) => setPassword(e.target.value)}/>
+          <CustomInput type="password" placeholder="123456789" onChange={(e) => setPassword(e.target.value)}/>
           {passwordError && <p className="text-red-600">{passwordError}</p>}
-          <button className="text-sm sm:text-base lg:text-xl px-6 py-2 bg-gray-300 rounded-lg hover:text-amber-50 hover:bg-gray-700 hover:transition hover:duration-500" type="submit">Submit</button>
+          <CustomButton type="submit" />
           {error && <p className="text-red-600">{error}</p>}
         </form>
         <CustomLink text="Go Back to Menu" to="/"/>
