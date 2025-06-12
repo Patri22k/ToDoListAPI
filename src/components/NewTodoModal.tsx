@@ -3,6 +3,7 @@ import {createTodo} from "../api/todo.ts";
 import CustomButton from "./CustomButton.tsx";
 import CustomInput from "./CustomInput.tsx";
 import CustomTextarea from "./CustomTextarea.tsx";
+import TodoModalLayout from "../layouts/TodoModalLayout.tsx";
 
 interface NewTodoModalProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   onClose: () => void;
@@ -31,9 +32,8 @@ const NewTodoModal = ({ onClose, onCreated, ...rest }: NewTodoModalProps) => {
   };
 
   return (
-    <div
-      className="fixed inset-0 m-10 flex items-center justify-center z-50 rounded-2xl shadow-xl border bg-white" {...rest}>
-      <div className="w-full flex flex-col items-center justify-center gap-y-5 md:gap-y-8">
+    <TodoModalLayout {...rest}>
+      <TodoModalLayout.Inner>
         <h2 className="text-3xl md:text-4xl lg:text-5xl">Create New Task</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-3 w-2/3 mx-auto">
           <CustomInput
@@ -57,8 +57,8 @@ const NewTodoModal = ({ onClose, onCreated, ...rest }: NewTodoModalProps) => {
             <p className="text-red-600">{error}</p>
           )}
         </form>
-      </div>
-    </div>
+      </TodoModalLayout.Inner>
+    </TodoModalLayout>
   );
 };
 
