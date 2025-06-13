@@ -29,7 +29,7 @@ const EditTodoModal = ({ onCreated, todo, onClose, ...rest }: EditTodoModalProps
       onClose();
       window.location.href = "/todos";
     } else {
-      setError(response.error.message ?? "An error occurred while editing the todo");
+      setError(response.error?.message ?? "An error occurred while editing the todo");
     }
   }
 

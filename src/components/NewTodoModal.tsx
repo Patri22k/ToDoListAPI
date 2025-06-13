@@ -27,7 +27,7 @@ const NewTodoModal = ({ onClose, onCreated, ...rest }: NewTodoModalProps) => {
       onCreated();
       onClose();
     } else {
-      setError(result.error.message ?? "Failed to create todo");
+      setError(result.error?.message ?? "Failed to create todo");
     }
   };
 

@@ -47,7 +47,7 @@ const TodoList = () => {
     if (result.success) {
       setTodos((prevTodos) => prevTodos.filter(todo => todo.id !== id));
     } else {
-      setError(result.error.message || "Failed to delete todo");
+      setError(result.error?.message || "Failed to delete todo");
     }
   };
 
@@ -63,7 +63,7 @@ const TodoList = () => {
     if (result.success) {
       setTodos(result.data.data);
     } else {
-      setError(result.error || "Failed to fetch todos");
+      setError(result.error?.message || "Failed to fetch todos");
     }
   };
 

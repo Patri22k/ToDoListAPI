@@ -13,9 +13,15 @@ export const fetchTodos = async () => {
     });
     return {success: true, data: response.data};
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    let errorMessage = {message: 'An error occurred while deleting todo'};
 
-    const errorMessage = error.response?.data || error.message || {message: 'An error occurred while fetching todos'};
+    if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data || { message: error.message };
+    } else if (error instanceof Error) {
+      errorMessage = {message: error.message};
+    }
+
     return {success: false, error: errorMessage};
   }
 }
@@ -35,8 +41,15 @@ export const createTodo = async (title: string, description: string) => {
       });
 
     return {success: true, data: response.data};
-  } catch (error: any) {
-    const errorMessage = error.response?.data || error.message || {message: 'An error occurred while creating todo'};
+  } catch (error: unknown) {
+    let errorMessage = {message: 'An error occurred while deleting todo'};
+
+    if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data || { message: error.message };
+    } else if (error instanceof Error) {
+      errorMessage = {message: error.message};
+    }
+
     return {success: false, error: errorMessage};
   }
 };
@@ -52,8 +65,15 @@ export const deleteTodo = async (id: number) => {
     });
     return {success: true, message: response.data.message}
 
-  } catch (error) {
-    const errorMessage = error.response?.data || error.message || {message: 'An error occurred while deleting todo'};
+  } catch (error: unknown) {
+    let errorMessage = {message: 'An error occurred while deleting todo'};
+
+    if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data || { message: error.message };
+    } else if (error instanceof Error) {
+      errorMessage = {message: error.message};
+    }
+
     return {success: false, error: errorMessage};
   }
 };
@@ -71,8 +91,15 @@ export const editTodo = async (id: number, title: string, description: string) =
       },
     });
     return {success: true, data: response.data};
-  } catch (error) {
-    const errorMessage = error.response?.data || error.message || {message: 'An error occurred while editing todo'};
+  } catch (error: unknown) {
+    let errorMessage = {message: 'An error occurred while editing todo'};
+
+    if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data || { message: error.message };
+    } else if (error instanceof Error) {
+      errorMessage = {message: error.message};
+    }
+
     return {success: false, error: errorMessage};
   }
 };
