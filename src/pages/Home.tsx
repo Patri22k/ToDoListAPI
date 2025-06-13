@@ -1,7 +1,12 @@
-import CustomLink from "../components/Link.tsx";
+import CustomLink from "../components/CustomLink.tsx";
 import AuthLayout from "../layouts/AuthLayout.tsx";
+import {useEffect} from "react";
 
 const Home = () => {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   return (
     <AuthLayout>
       <AuthLayout.Header>
@@ -9,8 +14,12 @@ const Home = () => {
         <p className="text-sm sm:text-base lg:text-lg">This is a simple project for managing a to-do list.</p>
       </AuthLayout.Header>
       <AuthLayout.Main>
-        <CustomLink text="Register" to="/register"/>
-        <CustomLink text="Log In" to="/login"/>
+        <CustomLink to="/register">
+          Register
+        </CustomLink>
+        <CustomLink to="/login">
+          Log In
+        </CustomLink>
       </AuthLayout.Main>
       <AuthLayout.Footer>
         {/* TODO */}

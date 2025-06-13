@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface LayoutProps {
+interface LayoutProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   children?: React.ReactNode;
 }
 
@@ -12,7 +12,7 @@ interface TodoLayoutProps extends React.FC<LayoutProps> {
 
 const TodoLayout: TodoLayoutProps = (props: LayoutProps) => {
   return (
-    <div className="Todo w-full min-h-screen flex">
+    <div className="Todo w-full min-h-screen flex" {...props}>
       {props.children}
     </div>
   );
@@ -20,7 +20,7 @@ const TodoLayout: TodoLayoutProps = (props: LayoutProps) => {
 
 TodoLayout.Header = (props: LayoutProps) => {
   return (
-    <header className="Todo-header flex flex-col mx-auto w-[90%] pb-3 md:pb-5 border-b-2">
+    <header className="Todo-header flex justify-between items-center mx-auto w-[90%] pb-3 md:pb-5 border-b-2">
       {props.children}
     </header>
   );

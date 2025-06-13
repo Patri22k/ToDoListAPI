@@ -1,8 +1,8 @@
 import AuthLayout from "../layouts/AuthLayout.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import * as React from "react";
 import {registerUser} from "../api/auth.ts";
-import CustomLink from "../components/Link.tsx";
+import CustomLink from "../components/CustomLink.tsx";
 import CustomInput from "../components/CustomInput.tsx";
 import CustomButton from "../components/CustomButton.tsx";
 
@@ -42,9 +42,15 @@ const Register = () => {
         setError(response.error.message);
       }
     } else {
-      // TODO: Handle successful registration, e.g., redirect to login page or show success message
+      const token = response.data.token;
+      localStorage.setItem('authToken', token);
+      window.location.href="/todos";
     }
   };
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     <AuthLayout>
@@ -79,7 +85,9 @@ const Register = () => {
           </CustomButton>
           {error && <p className="text-red-700">{error}</p>}
         </form>
-        <CustomLink text="Go Back to Menu" to="/" />
+        <CustomLink to="/">
+          Go Back to Menu
+        </CustomLink>
       </AuthLayout.Main>
     </AuthLayout>
   );

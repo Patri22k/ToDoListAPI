@@ -3,13 +3,15 @@ import TodoGridLayout from "../layouts/TodoGridLayout.tsx";
 import * as React from "react";
 import {deleteTodo, fetchTodos} from "../api/todo.ts";
 import {useEffect} from "react";
-import Sidebar from "../components/Sidebar.tsx";
+import DesktopSidebar from "../components/DesktopSidebar.tsx";
 import SidebarTask from "../components/SidebarTask.tsx";
 import NewTodoModal from "../components/NewTodoModal.tsx";
 import {MdDeleteOutline} from "react-icons/md";
 import {FaRegEdit} from "react-icons/fa";
 import EditTodoModal from "../components/EditTodoModal.tsx";
-import CustomLink from "../components/Link.tsx";
+import CustomLink from "../components/CustomLink.tsx";
+import {IoIosMenu} from "react-icons/io";
+import MobileSidebar from "../components/MobileSidebar.tsx";
 
 export interface TodoItem {
   id: number;
@@ -24,6 +26,7 @@ const TodoList = () => {
   const [error, setError] = React.useState("");
   const [showNewTodoModal, setShowNewTodoModal] = React.useState(false);
   const [editTodo, setEditTodo] = React.useState<TodoItem | null>(null);
+  const [showMobileSidebar, setShowMobileSidebar] = React.useState(false);
 
   const handleNewTask = () => {
     setShowNewTodoModal(true);
@@ -48,6 +51,10 @@ const TodoList = () => {
     }
   };
 
+  const handleMobileSidebarToggle = () => {
+    setShowMobileSidebar(true);
+  }
+
   const loadTodos = async () => {
     setLoading(true);
     const result = await fetchTodos();
@@ -61,20 +68,49 @@ const TodoList = () => {
   };
 
   useEffect(() => {
-    loadTodos();
+    loadTodos().catch((error) => {
+      setError('Failed to load todos: ' + error);
+    });
   }, []);
 
   return (
     <TodoLayout>
-      <Sidebar>
-        <SidebarTask onClick={handleNewTask}>
-          New Task
-        </SidebarTask>
-        <CustomLink text="Log out" to="/" />
-      </Sidebar>
-      <div className="flex flex-col w-full sm:w-fit gap-y-3 py-3 md:py-6">
+      {showMobileSidebar && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setShowMobileSidebar(false)}
+        >
+          <MobileSidebar onClick={(e) => e.stopPropagation()}>
+            <div className="Main-sidebar flex flex-col items-center gap-y-4">
+              <SidebarTask onClick={handleNewTask}>
+                New Task
+              </SidebarTask>
+              <SidebarTask onClick={() => setShowMobileSidebar(false)}>
+                Close Sidebar
+              </SidebarTask>
+            </div>
+            <CustomLink to="/" className="!w-[80%] mx-auto">
+              Log Out
+            </CustomLink>
+          </MobileSidebar>
+        </div>)}
+      <DesktopSidebar>
+        <div className="Main-sidebar flex flex-col items-center gap-y-4">
+          <SidebarTask onClick={handleNewTask}>
+            New Task
+          </SidebarTask>
+        </div>
+        <CustomLink to="/" className="!w-[80%] mx-auto">
+          Log Out
+        </CustomLink>
+      </DesktopSidebar>
+      <div className="flex flex-col w-full gap-y-3 py-3 md:py-6">
         <TodoLayout.Header>
           <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Your Todos</h1>
+          <IoIosMenu
+            className="text-4xl sm:hidden cursor-pointer"
+            onClick={handleMobileSidebarToggle}
+          />
         </TodoLayout.Header>
         <TodoLayout.Main>
           {loading ? (

@@ -1,6 +1,6 @@
 import AuthLayout from "../layouts/AuthLayout.tsx";
-import CustomLink from "../components/Link.tsx";
-import {useState} from "react";
+import CustomLink from "../components/CustomLink.tsx";
+import {useEffect, useState} from "react";
 import * as React from "react";
 import {loginUser} from "../api/auth.ts";
 import CustomButton from "../components/CustomButton.tsx";
@@ -44,6 +44,10 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   return (
     <AuthLayout>
       <AuthLayout.Header>
@@ -59,7 +63,9 @@ const Login = () => {
           <CustomButton type="submit" />
           {error && <p className="text-red-600">{error}</p>}
         </form>
-        <CustomLink text="Go Back to Menu" to="/"/>
+        <CustomLink to="/">
+          Go Back to Menu
+        </CustomLink>
       </AuthLayout.Main>
     </AuthLayout>
   );

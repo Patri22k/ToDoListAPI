@@ -52,7 +52,6 @@ const EditTodoModal = ({ onCreated, todo, onClose, ...rest }: EditTodoModalProps
             onChange={(e) => setTitle(e.target.value)}
           />
           <CustomTextarea
-            type="text"
             value={description}
             placeholder="Enter task description"
             onChange={(e) => setDescription(e.target.value)}

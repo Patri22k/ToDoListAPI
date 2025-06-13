@@ -4,11 +4,11 @@ interface LayoutProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLD
   children?: React.ReactNode;
 }
 
-interface TodoModalLayoutProps extends LayoutProps {
-  Inner?: React.FC<LayoutProps>;
+interface TodoModalLayoutProps extends React.FC<LayoutProps> {
+  Inner: React.FC<LayoutProps>;
 }
 
-const TodoModalLayout: React.FC<TodoModalLayoutProps> = (props: LayoutProps) => {
+const TodoModalLayout: TodoModalLayoutProps = (props: LayoutProps) => {
   return (
     <div
       className="fixed inset-0 m-10 sm:mx-20 lg:mx-30 flex items-center justify-center z-50 rounded-2xl shadow-xl border bg-white"
