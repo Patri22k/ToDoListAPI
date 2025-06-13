@@ -4,8 +4,13 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        react(),
-        tailwindcss(),
-    ],
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+  define: {
+    "process.env": process.env,
+    VITE_AUTH_BASE_URL: process.env.VITE_AUTH_BASE_URL,
+    VITE_API_BASE_URL: process.env.VITE_API_BASE_URL,
+  },
 })
