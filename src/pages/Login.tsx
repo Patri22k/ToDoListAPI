@@ -1,8 +1,9 @@
+import * as React from "react";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {loginUser} from "../api/auth.ts";
 import AuthLayout from "../layouts/AuthLayout.tsx";
 import CustomLink from "../components/CustomLink.tsx";
-import {useEffect, useState} from "react";
-import * as React from "react";
-import {loginUser} from "../api/auth.ts";
 import CustomButton from "../components/CustomButton.tsx";
 import CustomInput from "../components/CustomInput.tsx";
 
@@ -13,6 +14,8 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +43,7 @@ const Login = () => {
     } else {
       const token = response.data.token;
       localStorage.setItem('authToken', token);
-      window.location.href = `/todos`;
+      navigate('/todos');
     }
   };
 

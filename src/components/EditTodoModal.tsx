@@ -5,6 +5,7 @@ import CustomTextarea from "./CustomTextarea.tsx";
 import CustomButton from "./CustomButton.tsx";
 import {editTodo} from "../api/todo.ts";
 import type {TodoItem} from "../pages/TodoList.tsx";
+import {useNavigate} from "react-router-dom";
 
 interface EditTodoModalProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   onCreated: () => void;
@@ -18,6 +19,8 @@ const EditTodoModal = ({ onCreated, todo, onClose, ...rest }: EditTodoModalProps
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -27,7 +30,7 @@ const EditTodoModal = ({ onCreated, todo, onClose, ...rest }: EditTodoModalProps
     if (response.success) {
       onCreated();
       onClose();
-      window.location.href = "/todos";
+      navigate("/todos");
     } else {
       setError(response.error?.message ?? "An error occurred while editing the todo");
     }

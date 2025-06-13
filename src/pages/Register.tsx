@@ -5,6 +5,7 @@ import {registerUser} from "../api/auth.ts";
 import CustomLink from "../components/CustomLink.tsx";
 import CustomInput from "../components/CustomInput.tsx";
 import CustomButton from "../components/CustomButton.tsx";
+import {useNavigate} from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -14,6 +15,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +47,7 @@ const Register = () => {
     } else {
       const token = response.data.token;
       localStorage.setItem('authToken', token);
-      window.location.href="/todos";
+      navigate("/todos");
     }
   };
 
