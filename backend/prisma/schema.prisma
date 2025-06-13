@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TodoList {
+model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   email    String @unique
@@ -21,7 +21,7 @@ model TodoList {
   todos    Todo[] @relation("UserTodos")
 }
 
-model TodoList {
+model Todo {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
