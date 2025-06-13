@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const AUTH_BASE_URL = import.meta.env.VITE_AUTH_BASE_URL;
-console.log("AUTH_BASE_URL:", AUTH_BASE_URL);
+const AUTH_BASE_URL = process.env.VITE_AUTH_BASE_URL;
 // const AUTH_BASE_URL = 'http://localhost:3000/auth'; // Fallback URL for local development
 
 export const registerUser = async (name: string, email: string, password: string) => {
