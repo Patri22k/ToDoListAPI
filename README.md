@@ -1,7 +1,8 @@
 # To-Do List API project from Roadmap
 
 This is a simple functional full-stack application that allows users to manage their todo lists.
-It includes user authentication, todo creation, updating, and deletion.
+It includes user authentication, todo creation, updating, and deletion. The project is insipired
+by the [Roadmap](https://roadmap.sh/projects/todo-list-api).
 
 ## Api Url Endpoints
 - POST `/auth/register`
