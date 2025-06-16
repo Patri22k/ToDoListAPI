@@ -6,20 +6,23 @@ import AuthLayout from "../layouts/AuthLayout.tsx";
 import CustomLink from "../components/CustomLink.tsx";
 import CustomButton from "../components/CustomButton.tsx";
 import CustomInput from "../components/CustomInput.tsx";
+import PasswordInput from "../components/PasswordInput.tsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState<string | null>(null);
-
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const response = await loginUser(email, password);
+    setLoading(false);
 
     setEmailError(null);
     setPasswordError(null);
@@ -59,16 +62,25 @@ const Login = () => {
       </AuthLayout.Header>
       <AuthLayout.Main>
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-3 w-full" autoComplete="off">
-          <CustomInput type="email" placeholder="john@doe.com" onChange={(e) => setEmail(e.target.value)}/>
+          <CustomInput
+            type="email"
+            placeholder="john@doe.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}/>
           {emailError && <p className="text-red-600">{emailError}</p>}
-          <CustomInput type="password" placeholder="123456789" onChange={(e) => setPassword(e.target.value)}/>
+          <PasswordInput
+            placeholder="123456789"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}/>
           {passwordError && <p className="text-red-600">{passwordError}</p>}
-          <CustomButton type="submit" />
-          {error && <p className="text-red-600">{error}</p>}
+          <CustomButton type="submit">
+            {loading ? "Logging in..." : "Log In"}
+          </CustomButton>
         </form>
         <CustomLink to="/">
           Go Back to Menu
         </CustomLink>
+        {error && <p className="text-red-600">{error}</p>}
       </AuthLayout.Main>
     </AuthLayout>
   );

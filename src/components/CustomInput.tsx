@@ -1,17 +1,14 @@
 import React from "react";
 
-interface CustomInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-  children?: React.ReactNode;
+export interface CustomInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
 }
 
 const CustomInput = (props: CustomInputProps) => {
   return (
     <input
-      className="p-2 border rounded "
+      className="p-2 border rounded w-full"
       {...props}
-    >
-      {props.children}
-    </input>
+    />
   );
 };
 
