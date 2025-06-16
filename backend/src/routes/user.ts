@@ -1,7 +1,7 @@
 import {Request, Response, Router} from 'express';
 import {PrismaClient} from "@prisma/client";
 import bcrypt from 'bcrypt';
-import {generateToken, hashPassword} from "../utils/security_utils";
+import {generateToken, hashPassword} from "../utils/securityUtils";
 import {loginUserSchema, registerUserSchema} from "../validations/userValidation";
 import {handleError, PrismaErrorCode} from "../utils/handleError";
 
@@ -28,11 +28,15 @@ router.post("/register", async (req: Request, res: Response) => {
   } catch (error) {
     // Handle validation errors from zod or prisma
     handleError(res, error, (prismaErrorCode) => {
-      if (prismaErrorCode == PrismaErrorCode.CONFLICT) {
-        return res.status(400).json({message: "TodoList with this email already exists"});
-      } else {
-        // Handle other errors
-        return res.status(500).json({message: "Error creating user in database, " + error});
+
+      switch (prismaErrorCode) {
+        case PrismaErrorCode.CONFLICT:
+          return res.status(400).json({message: "TodoList with this email already exists"});
+        case PrismaErrorCode.NOT_FOUND:
+          return res.status(404).json({message: "TodoList not found"});
+
+        default: // Handle other errors
+          return res.status(500).json({message: "Error creating user in database, " + error});
       }
     });
   }

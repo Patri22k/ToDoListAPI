@@ -3,8 +3,8 @@ import {ZodError} from "zod";
 import {Prisma} from "@prisma/client";
 
 export enum PrismaErrorCode {
-  CONFLICT,
-  NOT_FOUND,
+  CONFLICT= "CONFLICT",
+  NOT_FOUND = "NOT_FOUND",
 }
 
 export const handleError = (
@@ -24,8 +24,8 @@ export const handleError = (
 
     const prismaErrorCode = determinePrismaErrorCode(error);
 
-    (unknownErrorCallback ?? ((_) => {
-      res.status(500).json({message: "An unexpected error occured"});
+    (unknownErrorCallback ?? ((_prismaErrorCode) => {
+      res.status(500).json({message: "An unexpected error occurred"});
     }))(prismaErrorCode);
   }
 }
@@ -38,9 +38,17 @@ const handleZodError = (res: Response, error: ZodError) => {
 }
 
 const handlePrismaError = (res: Response, error: Prisma.PrismaClientKnownRequestError) => {
-  // TODO: Common prisma errors: connection errors, etc.
+  // Handle things that aren't passed to determinePrismaErrorCode
+  switch (error.code) {
+    case "P1001": // Cannot connect to a database
+    case "P1002": // Timeout
+    case "P1010": // Authentication failed
+      res.status(500).json({ message: "Database connection error" });
+      return true;
 
-  return false;
+    default:
+      return false;
+  }
 }
 
 const determinePrismaErrorCode = (error: Prisma.PrismaClientKnownRequestError) => {

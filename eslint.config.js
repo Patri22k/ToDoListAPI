@@ -23,6 +23,11 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+        "no-used-vars": [
+            "error", {
+                "argsIgnorePattern": "^_",
+            }
+        ]
     },
   },
 )
