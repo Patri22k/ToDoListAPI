@@ -12,7 +12,7 @@ interface AuthLayoutProps extends React.FC<LayoutProps> {
 
 const AuthLayout: AuthLayoutProps = (props: LayoutProps) => {
   return (
-    <div className="App w-full min-h-screen flex flex-col justify-center gap-y-5">
+    <div className="App w-full h-screen overflow-y-auto flex flex-col justify-center gap-y-5">
       {props.children}
     </div>
   );
